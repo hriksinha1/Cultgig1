@@ -1,18 +1,21 @@
-/* Navbar component - Sticky transparent nav with blur on scroll */
+/* Navbar - Updated with React Router links + multi-page navigation */
 import { useState, useEffect } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
-  { label: 'Features', href: '#features' },
-  { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Download', href: '#download' },
-  { label: 'Join Waitlist', href: '#waitlist' },
+  { label: 'Features', to: '/features' },
+  { label: 'How It Works', to: '/how-it-works' },
+  { label: 'For Artists', to: '/for-artists' },
+  { label: 'For Businesses', to: '/for-businesses' },
+  { label: 'About', to: '/about' },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -20,12 +23,10 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (e, href) => {
-    e.preventDefault();
+  /* Close mobile menu on route change */
+  useEffect(() => {
     setMobileOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, [location.pathname]);
 
   return (
     <nav
@@ -38,37 +39,39 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto w-full px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" data-testid="navbar-logo" className="font-['Syne'] text-2xl font-extrabold tracking-tight">
+        <Link to="/" data-testid="navbar-logo" className="font-['Syne'] text-2xl font-extrabold tracking-tight">
           Cult<span className="text-[#EAFF00]">Gig</span>
-        </a>
+        </Link>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.slice(0, 3).map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
+        <div className="hidden lg:flex items-center gap-7">
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
               data-testid={`nav-link-${link.label.toLowerCase().replace(/\s/g, '-')}`}
-              onClick={(e) => handleNavClick(e, link.href)}
-              className="text-sm font-medium text-[#a0a0a0] hover:text-white transition-colors duration-300 font-['Satoshi']"
+              className={({ isActive }) =>
+                `text-sm font-medium transition-colors duration-300 font-['Satoshi'] ${
+                  isActive ? 'text-[#EAFF00]' : 'text-[#a0a0a0] hover:text-white'
+                }`
+              }
             >
               {link.label}
-            </a>
+            </NavLink>
           ))}
-          <a
-            href="#waitlist"
+          <Link
+            to="/waitlist"
             data-testid="nav-cta-join-waitlist"
-            onClick={(e) => handleNavClick(e, '#waitlist')}
             className="bg-[#EAFF00] text-black text-sm font-bold px-6 py-2.5 rounded-full hover:bg-[#d4e600] transition-all duration-300 shadow-[0_0_20px_rgba(234,255,0,0.3)] hover:shadow-[0_0_30px_rgba(234,255,0,0.5)]"
           >
             Join Waitlist
-          </a>
+          </Link>
         </div>
 
         {/* Mobile Hamburger */}
         <button
           data-testid="navbar-mobile-menu-toggle"
-          className="md:hidden text-white p-2"
+          className="lg:hidden text-white p-2"
           onClick={() => setMobileOpen(!mobileOpen)}
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -84,26 +87,32 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 top-20 bg-black/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-10 md:hidden"
+            className="fixed inset-0 top-20 bg-black/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-8 lg:hidden"
           >
             {navLinks.map((link, i) => (
-              <motion.a
-                key={link.href}
-                href={link.href}
-                data-testid={`mobile-nav-link-${link.label.toLowerCase().replace(/\s/g, '-')}`}
-                onClick={(e) => handleNavClick(e, link.href)}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className={`text-2xl font-['Syne'] font-bold ${
-                  link.label === 'Join Waitlist'
-                    ? 'text-[#EAFF00]'
-                    : 'text-white hover:text-[#EAFF00]'
-                } transition-colors`}
-              >
-                {link.label}
-              </motion.a>
+              <motion.div key={link.to} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
+                <NavLink
+                  to={link.to}
+                  data-testid={`mobile-nav-link-${link.label.toLowerCase().replace(/\s/g, '-')}`}
+                  className={({ isActive }) =>
+                    `text-2xl font-['Syne'] font-bold transition-colors ${
+                      isActive ? 'text-[#EAFF00]' : 'text-white hover:text-[#EAFF00]'
+                    }`
+                  }
+                >
+                  {link.label}
+                </NavLink>
+              </motion.div>
             ))}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: navLinks.length * 0.08 }}>
+              <Link
+                to="/waitlist"
+                data-testid="mobile-nav-cta-waitlist"
+                className="text-2xl font-['Syne'] font-bold text-[#EAFF00]"
+              >
+                Join Waitlist
+              </Link>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
