@@ -6,11 +6,11 @@ import os
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
-from typing import List
+from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
 
-
+# ─── Configuration ─────────────────────────────────────────────
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
@@ -19,17 +19,35 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-# Create the main app without a prefix
-app = FastAPI()
+# ─── FastAPI App Setup ─────────────────────────────────────────
+app = FastAPI(
+    title="CultGig API",
+    description="Backend API for CultGig - Talent Marketplace Platform",
+    version="1.0.0",
+)
 
-# Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
+# ─── Models ────────────────────────────────────────────────────
 
-# Define Models
+class WaitlistEntry(BaseModel):
+    """Waitlist signup model"""
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    email: str
+    role: str  # "artist" or "business"
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class WaitlistCreate(BaseModel):
+    """Input model for waitlist signup"""
+    name: str
+    email: str
+    role: str
+
 class StatusCheck(BaseModel):
-    model_config = ConfigDict(extra="ignore")  # Ignore MongoDB's _id field
-    
+    """Health check model"""
+    model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     client_name: str
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
@@ -37,36 +55,60 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
-# Add your routes to the router instead of directly to app
+# ─── Routes ────────────────────────────────────────────────────
+
 @api_router.get("/")
 async def root():
-    return {"message": "Hello World"}
+    """Health check endpoint"""
+    return {"message": "CultGig API is running", "status": "ok"}
+
+@api_router.get("/health")
+async def health_check():
+    """Detailed health check"""
+    return {
+        "status": "healthy",
+        "service": "CultGig Landing Page API",
+        "version": "1.0.0",
+    }
+
+@api_router.post("/waitlist", response_model=WaitlistEntry)
+async def join_waitlist(entry: WaitlistCreate):
+    """Add a user to the CultGig waitlist"""
+    waitlist_obj = WaitlistEntry(**entry.model_dump())
+    doc = waitlist_obj.model_dump()
+    await db.waitlist.insert_one(doc)
+    return waitlist_obj
+
+@api_router.get("/waitlist", response_model=List[WaitlistEntry])
+async def get_waitlist():
+    """Get all waitlist entries"""
+    entries = await db.waitlist.find({}, {"_id": 0}).to_list(1000)
+    return entries
+
+@api_router.get("/waitlist/count")
+async def get_waitlist_count():
+    """Get waitlist count"""
+    count = await db.waitlist.count_documents({})
+    return {"count": count}
 
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
     status_dict = input.model_dump()
     status_obj = StatusCheck(**status_dict)
-    
-    # Convert to dict and serialize datetime to ISO string for MongoDB
     doc = status_obj.model_dump()
     doc['timestamp'] = doc['timestamp'].isoformat()
-    
     _ = await db.status_checks.insert_one(doc)
     return status_obj
 
 @api_router.get("/status", response_model=List[StatusCheck])
 async def get_status_checks():
-    # Exclude MongoDB's _id field from the query results
     status_checks = await db.status_checks.find({}, {"_id": 0}).to_list(1000)
-    
-    # Convert ISO string timestamps back to datetime objects
     for check in status_checks:
         if isinstance(check['timestamp'], str):
             check['timestamp'] = datetime.fromisoformat(check['timestamp'])
-    
     return status_checks
 
-# Include the router in the main app
+# ─── Include Router & Middleware ───────────────────────────────
 app.include_router(api_router)
 
 app.add_middleware(
@@ -77,7 +119,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Configure logging
+# ─── Logging ───────────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'

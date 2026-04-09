@@ -1,34 +1,57 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* CultGig Landing Page - Minimal custom styles */
+/* Most styling is handled by Tailwind utility classes */
+
+/* Glow pulse animation for primary CTA buttons */
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(234, 255, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(234, 255, 0, 0.6);
+  }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+.glow-pulse {
+  animation: glowPulse 3s ease-in-out infinite;
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+/* Scroll down arrow bounce */
+@keyframes bounceDown {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(12px);
+    opacity: 0.5;
+  }
 }
 
-.App-link {
-    color: #61dafb;
+.bounce-down {
+  animation: bounceDown 2s ease-in-out infinite;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+/* Dashed timeline connector */
+.timeline-connector {
+  border-top: 2px dashed rgba(234, 255, 0, 0.4);
+}
+
+/* Phone mockup glow */
+.phone-glow {
+  position: relative;
+}
+
+.phone-glow::after {
+  content: '';
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(circle, rgba(234, 255, 0, 0.08) 0%, transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Glass card styles for select dropdown */
+.cultgig-select-content {
+  background: #1a1a1a !important;
+  border: 1px solid rgba(234, 255, 0, 0.2) !important;
 }
