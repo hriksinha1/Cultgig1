@@ -70,11 +70,11 @@ export default function ForBusinessesPage() {
         </div>
       </section>
 
-      {/* Why Choose CultGig */}
+      {/* Why Choose cultgig */}
       <section className="py-16">
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="font-['Syne'] text-2xl md:text-3xl font-bold text-white mb-10 text-center">
-            Why Choose <span className="text-[#EAFF00]">CultGig?</span>
+            Why Choose <span className="text-[#EAFF00]">cultgig?</span>
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {benefits.map((b, i) => (
@@ -95,7 +95,7 @@ export default function ForBusinessesPage() {
       <section className="py-16 bg-[#0a0a0a]">
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="font-['Syne'] text-2xl md:text-3xl font-bold text-white mb-10 text-center">
-            Venues on <span className="text-[#EAFF00]">CultGig</span>
+            Venues on <span className="text-[#EAFF00]">cultgig</span>
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {mockBusinesses.map((b, i) => (

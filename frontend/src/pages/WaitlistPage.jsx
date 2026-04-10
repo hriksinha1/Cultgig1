@@ -13,7 +13,7 @@ const stats = [
 ];
 
 const benefits = [
-  { icon: Zap, title: 'Early Access', desc: 'Be among the first to explore and book on CultGig before the public launch.' },
+  { icon: Zap, title: 'Early Access', desc: 'Be among the first to explore and book on cultgig before the public launch.' },
   { icon: Gift, title: 'Exclusive Perks', desc: 'Waitlist members get special launch offers, reduced fees, and priority placement.' },
   { icon: Shield, title: 'Founding Member Badge', desc: 'Stand out with a verified "Early Adopter" badge on your profile forever.' },
 ];
@@ -74,7 +74,7 @@ export default function WaitlistPage() {
             transition={{ delay: 0.2 }}
             className="text-lg text-[#a0a0a0] font-['Satoshi'] max-w-xl mx-auto"
           >
-            Join the CultGig waitlist and get early access when we launch. No spam. Just the good stuff.
+            Join the cultgig waitlist and get early access when we launch. No spam. Just the good stuff.
           </motion.p>
         </div>
       </section>

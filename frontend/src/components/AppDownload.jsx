@@ -26,7 +26,7 @@ export default function AppDownload() {
               data-testid="app-download-headline"
               className="font-['Syne'] text-3xl md:text-5xl tracking-tight font-bold text-white mb-4"
             >
-              Take <span className="text-[#EAFF00]">CultGig</span> Everywhere
+              Take <span className="text-[#EAFF00]">cultgig</span> Everywhere
             </h2>
             <p className="text-[#a0a0a0] text-lg font-['Satoshi'] leading-relaxed mb-10 max-w-md">
               Available on iOS and Android. Discover gigs or talent on the go.

@@ -35,7 +35,7 @@ export default function AboutPage() {
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
             className="text-lg text-[#a0a0a0] font-['Satoshi'] max-w-2xl mx-auto leading-relaxed">
-            CultGig was born from a simple frustration: talented artists struggle to find gigs, while venues struggle to find the right talent. We're bridging that gap with technology, trust, and a deep love for the creative community.
+            cultgig was born from a simple frustration: talented artists struggle to find gigs, while venues struggle to find the right talent. We're bridging that gap with technology, trust, and a deep love for the creative community.
           </motion.p>
         </div>
       </section>

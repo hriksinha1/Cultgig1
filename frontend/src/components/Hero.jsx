@@ -62,7 +62,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="text-lg text-[#a0a0a0] font-['Satoshi'] leading-relaxed mb-10 max-w-[600px] mx-auto"
           >
-            CultGig connects artists, creators, and freelancers with businesses
+            cultgig connects artists, creators, and freelancers with businesses
             and venues that need their talent.
           </motion.p>
 

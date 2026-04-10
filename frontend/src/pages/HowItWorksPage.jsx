@@ -19,11 +19,11 @@ const businessSteps = [
 ];
 
 const faqs = [
-  { q: 'Is CultGig free to join?', a: 'Yes! Joining the waitlist and creating a profile is completely free. We only charge a small commission on completed bookings.' },
+  { q: 'Is cultgig free to join?', a: 'Yes! Joining the waitlist and creating a profile is completely free. We only charge a small commission on completed bookings.' },
   { q: 'How do payments work?', a: 'Payments are processed securely through our in-app escrow system. The venue pays upfront, and the artist receives the funds after the gig is completed.' },
   { q: 'What types of artists can join?', a: 'Musicians, singers, DJs, photographers, videographers, comedians, spoken word artists, magicians, dancers, and all kinds of live performers and creators.' },
   { q: 'How do I get discovered?', a: 'Complete your profile with high-quality media, collect reviews from past gigs, and keep your availability updated. The more complete your profile, the higher you rank in search.' },
-  { q: 'What cities does CultGig operate in?', a: 'We are launching in 10 cities across India initially — Mumbai, Delhi, Bangalore, Hyderabad, Pune, Chennai, Kolkata, Jaipur, Goa, and Ahmedabad. More cities coming soon.' },
+  { q: 'What cities does cultgig operate in?', a: 'We are launching in 10 cities across India initially — Mumbai, Delhi, Bangalore, Hyderabad, Pune, Chennai, Kolkata, Jaipur, Goa, and Ahmedabad. More cities coming soon.' },
 ];
 
 function StepCard({ step, index, total }) {
@@ -108,7 +108,7 @@ export default function HowItWorksPage() {
             animate={{ opacity: 1, y: 0 }}
             className="font-['Syne'] text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter text-white mb-6"
           >
-            How <span className="text-[#EAFF00]">CultGig</span> Works
+            How <span className="text-[#EAFF00]">cultgig</span> Works
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}

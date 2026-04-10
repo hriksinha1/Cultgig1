@@ -106,7 +106,7 @@ export default function HowItWorks() {
             data-testid="how-it-works-headline"
             className="font-['Syne'] text-3xl md:text-5xl tracking-tight font-bold text-white mb-4"
           >
-            How <span className="text-[#EAFF00]">CultGig</span> Works
+            How <span className="text-[#EAFF00]">cultgig</span> Works
           </h2>
           <p className="text-[#a0a0a0] text-lg font-['Satoshi'] max-w-xl mx-auto">
             Three simple steps to connect talent with opportunity.

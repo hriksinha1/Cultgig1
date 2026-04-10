@@ -99,9 +99,9 @@ export default function Footer() {
             <FooterLinkColumn title="Quick Links" links={quickLinks} testIdPrefix="footer-quick" />
           </motion.div>
 
-          {/* Col 3: Join CultGig */}
+          {/* Col 3: Join cultgig */}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
-            <FooterLinkColumn title="Join CultGig" links={joinLinks} testIdPrefix="footer-join" />
+            <FooterLinkColumn title="Join cultgig" links={joinLinks} testIdPrefix="footer-join" />
           </motion.div>
 
           {/* Col 4: Legal */}
@@ -112,7 +112,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-[#666] text-sm font-['Satoshi']">&copy; 2025 CultGig. All rights reserved.</p>
+          <p className="text-[#666] text-sm font-['Satoshi']">&copy; 2025 cultgig. All rights reserved.</p>
           <div className="flex gap-6">
             <Link to="/privacy-policy" data-testid="footer-privacy-policy" className="text-[#666] hover:text-[#a0a0a0] text-sm font-['Satoshi'] transition-colors">
               Privacy Policy

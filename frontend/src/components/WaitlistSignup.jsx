@@ -81,7 +81,7 @@ export default function WaitlistSignup() {
             Be First. Be <span className="text-[#EAFF00]">Seen.</span>
           </h2>
           <p className="text-[#a0a0a0] text-lg font-['Satoshi'] leading-relaxed mb-10">
-            Join the CultGig waitlist and get early access when we launch.
+            Join the cultgig waitlist and get early access when we launch.
             No spam. Just the good stuff.
           </p>
 

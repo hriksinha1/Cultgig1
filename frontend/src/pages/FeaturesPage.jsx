@@ -19,7 +19,7 @@ const businessFeatures = [
   { icon: Search, title: 'Talent Discovery', desc: 'Browse thousands of verified artists filtered by category, location, rating, and price.' },
   { icon: ClipboardList, title: 'Booking Manager', desc: 'Handle all your bookings from one dashboard — scheduling, communication, and status tracking.' },
   { icon: CreditCard, title: 'Payment Gateway', desc: 'Process payments securely with escrow protection and automated invoicing.' },
-  { icon: ShieldCheck, title: 'Verified Profiles', desc: 'Every artist on CultGig is identity-verified so you can book with confidence.' },
+  { icon: ShieldCheck, title: 'Verified Profiles', desc: 'Every artist on cultgig is identity-verified so you can book with confidence.' },
   { icon: MessageSquare, title: 'Review System', desc: 'Rate and review talent after every booking to help the community make better choices.' },
   { icon: CalendarClock, title: 'Event Planner Tool', desc: 'Plan multi-act events with our timeline tool — manage lineup, breaks, and schedules.' },
 ];
