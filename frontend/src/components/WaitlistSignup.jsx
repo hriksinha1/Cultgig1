@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '../components/ui/input';
 import { CheckCircle2, Lock, AlertTriangle, XCircle, Loader2 } from 'lucide-react';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL?.trim();
+const WAITLIST_ENDPOINT = BACKEND_URL ? `${BACKEND_URL}/api/waitlist` : '/api/waitlist';
 
 export default function WaitlistSignup() {
   const [name, setName] = useState('');
@@ -41,7 +42,7 @@ export default function WaitlistSignup() {
     setValidationMessage('');
 
     try {
-      const res = await fetch(`${BACKEND_URL}/api/waitlist`, {
+      const res = await fetch(WAITLIST_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email: normalizedEmail, whatsapp: normalizedWhatsapp, role }),
@@ -65,11 +66,22 @@ export default function WaitlistSignup() {
         setRole('');
       } else if (statusCode === 409) {
         setStatus('duplicate');
+      } else if (statusCode === 400 && data.message) {
+        setStatus('error');
+        setValidationMessage(data.message);
       } else {
         setStatus('error');
+        if (data.message) {
+          setValidationMessage(data.message);
+        }
       }
     } catch (err) {
       setStatus('error');
+      setValidationMessage(
+        BACKEND_URL
+          ? 'Unable to reach server. Please try again.'
+          : 'Backend URL is not configured. Set REACT_APP_BACKEND_URL in frontend environment variables.'
+      );
     } finally {
       setLoading(false);
     }
