@@ -77,15 +77,15 @@ router.post('/', async (req, res) => {
   }
 });
 
-// GET /api/waitlist — List all entries
-router.get('/', async (req, res) => {
-  try {
-    const entries = await Waitlist.find().sort({ joinedAt: -1 });
-    return res.json({ success: true, data: entries });
-  } catch (err) {
-    return res.status(500).json({ success: false, message: 'Server error' });
-  }
-});
+// GET /api/waitlist — List all entries - This opens public data. Don't use this.
+// router.get('/', async (req, res) => {
+//   try {
+//     const entries = await Waitlist.find().sort({ joinedAt: -1 });
+//     return res.json({ success: true, data: entries });
+//   } catch (err) {
+//     return res.status(500).json({ success: false, message: 'Server error' });
+//   }
+// });
 
 // GET /api/waitlist/count — Count entries
 router.get('/count', async (req, res) => {
